@@ -2,11 +2,11 @@ from django.db import models
 
 # Create your models here.
 class Storys(models.Model):
-    storyTitle_ = models.CharField(max_length=200)
-    createTime_ = models.DateField(auto_now_add=True)
+    story_title = models.CharField(max_length=200)
+    create_time = models.DateField(auto_now_add=True)
 
 
 class Contributions(models.Model):
-    storyId_ = models.ManyToManyField("Storys")
-    contributionText_ = models.TextField()
-    createTime_ = models.DateField(auto_now_add=True)
+    story_id = models.ForeignKey("Storys")
+    contribution_text = models.TextField()
+    create_time = models.DateField(auto_now_add=True)

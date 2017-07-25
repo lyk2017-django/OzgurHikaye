@@ -1,3 +1,1 @@
-Sınıf isimleri ilk harfi büyük başlar. Örnek ==> Storys
-
-Field isimleri ilk harfi küçük ve son karakteri _ olarak yazılır. Örnek ==> contributionText_
+pip8 standardı kullanılamya çalışılmaktadır.
