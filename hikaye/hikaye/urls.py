@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include # include eklendi
 from django.contrib import admin
-from hikaye.urls import urlpatterns as story_urls
+from ozgur_modul.urls import urlpatterns as story_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^story/', include(story_urls)),
+    url(r'^', include(story_urls)),
 ]

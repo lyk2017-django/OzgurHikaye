@@ -6,17 +6,19 @@ from django.views import generic
 from ozgur_modul.models import Storys, Contributions
 
 class AnaSayfaView(generic.TemplateView):
-    template_name = "hikaye/anasayfa.html"
+    template_name = "ozgur_modul/anasayfa.html"
 
 class SSSView(generic.TemplateView):
-    template_name = "hikaye/sss.html"
+    template_name = "ozgur_modul/sss.html"
 
 class StoryListView(generic.ListView):
+    template_name = "ozgur_modul/hikayeler.html"
     model = Storys
 #    def get_queryset(self):
 #        return Contributions.objects.all()
 
 class StoryView(generic.DetailView):
+    template_name = "ozgur_modul/hikaye.html"
     def get_queryset(self):
         return Contributions.objects.all() #filter(story=pk)
 
