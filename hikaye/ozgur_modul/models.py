@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Storys(models.Model):
+    """Hikayelerin başlıklarını ve diğer bilgilerini bu tabloda saklayacağız."""
     story_title = models.CharField(max_length=200)
     create_time = models.DateField(auto_now_add=True)
 
@@ -10,6 +11,7 @@ class Storys(models.Model):
 
 
 class Contributions(models.Model):
+    """Her bir hikayeye giriHikayelerin başlıklarını ve diğer bilgilerini bu tabloda saklayacağız."""
     story = models.ForeignKey("Storys")
     contribution_text = models.TextField()
     create_time = models.DateField(auto_now_add=True)
