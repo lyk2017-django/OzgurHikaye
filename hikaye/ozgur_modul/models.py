@@ -7,7 +7,12 @@ class Storys(models.Model):
     create_time = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return "#{id} {text} ".format(id=self.id, text=self.story_title)
+        return "#{id}-{text} ".format(id=self.id, text=self.story_title)
+
+    class Meta:
+        verbose_name="Başlık"
+        verbose_name_plural = "Başlıklar"
+
 
 
 class Contributions(models.Model):
@@ -17,5 +22,9 @@ class Contributions(models.Model):
     create_time = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return "#{id} {text} ".format(id=self.id, text=self.contribution_text)
+        return "#{id}-{text} ".format(id=self.id, text=self.contribution_text)
+
+    class Meta:
+        verbose_name="Katkı"
+        verbose_name_plural = "Katkılar"
 

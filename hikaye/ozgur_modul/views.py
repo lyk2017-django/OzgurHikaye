@@ -19,7 +19,4 @@ class StoryListView(generic.ListView):
 
 class StoryView(generic.DetailView):
     template_name = "ozgur_modul/hikaye.html"
-    def get_queryset(self):
-        return Contributions.objects.all() #filter(story=pk)
-
-
+    model = Storys

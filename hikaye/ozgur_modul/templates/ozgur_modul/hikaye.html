@@ -1,0 +1,3 @@
+{% for obj in object.contributions_set.all %}
+<p title="{{obj.create_time}}">{{obj.contribution_text}}</p>
+{% endfor %}
