@@ -48,7 +48,7 @@ class ContributionCreateView(generic.CreateView):
 
 class NewStoryView(generic.CreateView):
     model = Storys
-    success_url = "."
     exclute=["id"]
+    success_url = "."
     template_name = "ozgur_modul/create_story.html"
     fields = ["story_title"]
