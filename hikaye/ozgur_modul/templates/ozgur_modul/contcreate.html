@@ -4,9 +4,11 @@
 
 
 <h1>{{object.story_title}}</h1>
+
 {% for obj in object.contributions_set.all %}
     <p title="{{obj.create_time}}">{{obj.contribution_text}}</p>
 {% endfor %}
+
 
 <h3>Sizce hikaye nasıl devam etsin?</h3>
 <form action="" method="POST">

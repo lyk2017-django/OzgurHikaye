@@ -13,21 +13,23 @@ class SSSView(generic.TemplateView):
 
 class StoryListView(generic.ListView):
     template_name = "ozgur_modul/hikayeler.html"
-    model = Storys
+    model = Storys  # object_list nesnesini gönderir
 #    def get_queryset(self):
 #        return Contributions.objects.all()
 
 class StoryView(generic.DetailView):
     template_name = "ozgur_modul/hikaye.html"
-    model = Storys
+    model = Storys  # object nesnesini gönderir
+
+
 
 class ContributionCreateView(generic.CreateView):
     form_class = ContribituonsNewForm
     template_name = "ozgur_modul/contcreate.html"
-    model = Contributions
     success_url = "."
 
-    def get_contributions(self):
+    def hikaye_bilgilerini_getir(self):
+        """URL'den gelen ID (pk) bilgine bakarak Story nesnesini çeker"""
         query = Storys.objects.filter(id=self.kwargs["pk"])
         if query.exists():
             return query.get()
@@ -35,23 +37,24 @@ class ContributionCreateView(generic.CreateView):
             raise  Http404("Contributions not found")
 
     def get_form_kwargs(self):
+        """Formun POST edilmesi sonrasında kaydederken gerekli olan story_id bağlaması burada yapılır"""
         kwargs = super().get_form_kwargs()
         if self.request.method in ["POST", "PUT"]:
             post_data = kwargs["data"].copy()
-            post_data["story"] = self.get_contributions().id
+            post_data["story"] = self.hikaye_bilgilerini_getir().id
             kwargs["data"] = post_data
         return kwargs
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs): # Template e giden tüm dictionary burada tutulur
+        """Formu veritabanına kaydetme aşamasında bize "URL'den gelen ID (pk) bilgisi gerekiyor."""
         context = super().get_context_data(**kwargs)
-        context["object"] = self.get_contributions()
+        context["object"] = self.hikaye_bilgilerini_getir()
         return context
 
 class NewStoryView(generic.CreateView):
-    model = Storys
-    exclute=["id"]
+    form_class = StoryNewForm
     template_name = "ozgur_modul/create_story.html"
-    fields = ["story_title"]
 
     def get_success_url(self):
-        return  reverse("contribution_create",kwargs={"pk":self.object.id})
+        return  reverse("contribution_create", kwargs={"pk":self.object.id})
+

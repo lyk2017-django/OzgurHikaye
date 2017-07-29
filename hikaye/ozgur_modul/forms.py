@@ -3,6 +3,7 @@ from ozgur_modul.models import Storys, Contributions
 from django.forms import HiddenInput
 
 class StoryNewForm(forms.ModelForm):
+    """Yeni hikaye oluşturma formu"""
     class Meta:
         model = Storys
         exclude = ["id"]
@@ -11,6 +12,7 @@ class StoryNewForm(forms.ModelForm):
         }
 
 class ContribituonsNewForm(forms.ModelForm):
+    """Hikaye için katkı ekleme formu"""
     class Meta:
         model = Contributions
         exclude = ["id"]
@@ -18,7 +20,7 @@ class ContribituonsNewForm(forms.ModelForm):
             "story": HiddenInput()
         }
         labels = {
-            "contribution_text": ""
+            "contribution_text": "" # Ekranda bu sahanın etiketi görünmesin...
         }
 
 
