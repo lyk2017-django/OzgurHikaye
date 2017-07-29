@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import generic
 from django.http import  Http404
 from ozgur_modul.forms import ContribituonsNewForm, StoryNewForm
@@ -49,6 +50,8 @@ class ContributionCreateView(generic.CreateView):
 class NewStoryView(generic.CreateView):
     model = Storys
     exclute=["id"]
-    success_url = "."
     template_name = "ozgur_modul/create_story.html"
     fields = ["story_title"]
+
+    def get_success_url(self):
+        return  reverse("contribution_create",kwargs={"pk":self.object.id})
