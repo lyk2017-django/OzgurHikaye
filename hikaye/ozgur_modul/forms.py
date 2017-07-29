@@ -11,6 +11,9 @@ class ContribituonsNewForm(forms.ModelForm):
     class Meta:
         model = Contributions
         exclude = ["id"]
+        widgets = {
+            "story": HiddenInput()
+        }
 
 
 #x=ContribituonsNewForm(request.POST)

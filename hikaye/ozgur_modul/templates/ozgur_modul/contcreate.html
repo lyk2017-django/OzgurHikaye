@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-{% for obj in object.storys %}
+<h1>{{object.story_title}}</h1>
+{% for obj in object.contributions_set.all %}
     <p title="{{obj.create_time}}">{{obj.contribution_text}}</p>
 {% endfor %}
 

@@ -24,6 +24,7 @@ class ContributionCreateView(generic.CreateView):
     form_class = ContribituonsNewForm
     template_name = "ozgur_modul/contcreate.html"
     model = Contributions
+    success_url = "."
 
     def get_contributions(self):
         query = Storys.objects.filter(id=self.kwargs["pk"])
@@ -32,14 +33,17 @@ class ContributionCreateView(generic.CreateView):
         else:
             raise  Http404("Contributions not found")
 
-    def get_from_kwargs(self):
+    def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        post_data = kwargs["data"].copy()
-        post_data["storys"]= self.context
+        if self.request.method in ["POST", "PUT"]:
+            post_data = kwargs["data"].copy()
+            post_data["story"] = self.get_contributions().id
+            kwargs["data"] = post_data
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["objects"]=self.get_contributions()
+        context["object"] = self.get_contributions()
         return context
 
 class NewStoryView(generic.CreateView):
