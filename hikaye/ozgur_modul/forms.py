@@ -10,7 +10,7 @@ class StoryNewForm(forms.ModelForm):
 class ContribituonsNewForm(forms.ModelForm):
     class Meta:
         model = Contributions
-        exclude = ["contribution_text"]
+        exclude = ["id"]
 
 
 #x=ContribituonsNewForm(request.POST)

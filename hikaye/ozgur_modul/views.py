@@ -26,7 +26,7 @@ class ContributionCreateView(generic.CreateView):
     model = Contributions
 
     def get_contributions(self):
-        query = Contributions.objects.filter(id=self.kwargs["pk"])
+        query = Storys.objects.filter(id=self.kwargs["pk"])
         if query.exists():
             return query.get()
         else:
