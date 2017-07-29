@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Özgür Hikaye</title>
+</head>
+<body>
+<h1>Özgür Hikaye</h1>
+<p>
+<a href="{% url 'home' %}">Ana Sayfa</a> -
+<a href="{% url 'faq_page' %}">S.S.S.</a> -
+<a href="{% url 'list_storys' %}">Hikayeler</a> -
+<a href="{% url 'create_story' %}">Yeni Hikaye Başlat</a>
+</p>
+<hr>
+
+{% block body %}
+
+{% endblock %}
+<hr>
+
+<p>Hikayelerin içeriği yazarların sorumluluğundadır.</p>
+
+</body>
+</html>

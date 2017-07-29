@@ -1,3 +1,16 @@
+
+{% extends "ozgur_modul/sablonumuz.html" %}
+
+{% block body %}
+
+<h1>{{ object.story_title }}</h1>
+
 {% for obj in object.contributions_set.all %}
 <p title="{{obj.create_time}}">{{obj.contribution_text}}</p>
 {% endfor %}
+
+<a href="{% url 'contribution_create' pk=object.id %}">Bu hikayeye katkıda bulunun !</a>
+
+{% endblock %}
+
+

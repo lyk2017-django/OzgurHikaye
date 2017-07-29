@@ -1,6 +1,14 @@
+{% extends "ozgur_modul/sablonumuz.html" %}
+
+{% block body %}
+
 <ul>
 {% for obj in object_list %}
     <li><h3><a href="{% url 'story_detail' pk=obj.pk %}">{{obj.story_title|title}}</a></h3></li>
 <!--    <li><a href="/stroy/{{obj.story_title}}-{{obj.id}}">{{ obj.story_title }}</li> -->
 {% endfor %}
 </ul>
+
+{% endblock %}
+
+

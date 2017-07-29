@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "ozgur_modul/sablonumuz.html" %}
+
+{% block body %}
+
+
 <h1>{{object.story_title}}</h1>
 {% for obj in object.contributions_set.all %}
     <p title="{{obj.create_time}}">{{obj.contribution_text}}</p>
 {% endfor %}
 
+<h3>Sizce hikaye nasıl devam etsin?</h3>
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
 <button type="submit">Ekle</button>
 </form>
-</body>
-</html>
+
+{% endblock %}
+
+
+
+
