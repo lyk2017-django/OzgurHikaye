@@ -5,11 +5,16 @@ from django.forms import HiddenInput
 class StoryNewForm(forms.ModelForm):
     """Yeni hikaye oluşturma formu"""
     class Meta:
-        model = Storys
-        exclude = ["id"]
+        model    = Storys
+        exclude  = ["id",
+                    "show_count",
+                    "good_count",
+                    "bad_count",
+                    "contribution_count"]
         labels = {
             "story_title": "Hikayenizin Başlığı"
         }
+
 
 class ContribituonsNewForm(forms.ModelForm):
     """Hikaye için katkı ekleme formu"""

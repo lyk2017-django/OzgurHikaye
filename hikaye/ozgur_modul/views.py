@@ -20,6 +20,9 @@ class StoryListView(generic.ListView):
 class StoryView(generic.DetailView):
     template_name = "ozgur_modul/hikaye.html"
     model = Storys  # object nesnesini gönderir
+    pageCounter = Storys.objects.all()[0] 
+    pageCounter.show_count += 1 
+    pageCounter.save()    
 
 
 
@@ -51,10 +54,14 @@ class ContributionCreateView(generic.CreateView):
         context["object"] = self.hikaye_bilgilerini_getir()
         return context
 
+
+
 class NewStoryView(generic.CreateView):
     form_class = StoryNewForm
     template_name = "ozgur_modul/create_story.html"
 
     def get_success_url(self):
         return  reverse("contribution_create", kwargs={"pk":self.object.id})
+
+
 
