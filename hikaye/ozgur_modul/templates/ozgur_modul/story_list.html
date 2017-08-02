@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+  <script src="{% static 'ozgur_modul/js/storys.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="page-header">Hikayeler</h1>
+
+  <p>
+    <button type="button" class="btn btn-primary js-create-story" data-url="{% url 'story_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      Yeni Hikaye
+    </button>
+  </p>
+
+  <table class="table" id="storys-table">
+    <thead>
+      <tr>
+        <th>Başlık</th>
+        <th>Zaman</th>
+        <th>Görüntülenme</th>
+        <th>Beğenilme</th>
+        <th>Beğenilmeme</th>
+        <th>Katkı</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% include 'ozgur_modul/includes/partial_story_list.html' %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal-book">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

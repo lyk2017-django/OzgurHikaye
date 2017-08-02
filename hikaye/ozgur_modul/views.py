@@ -1,67 +1,82 @@
-from django.shortcuts import render
-from django.urls import reverse
-from django.views import generic
-from django.http import  Http404
-from ozgur_modul.forms import ContribituonsNewForm, StoryNewForm
+from django.shortcuts import render, get_object_or_404
 from ozgur_modul.models import Storys, Contributions
+from ozgur_modul.forms import StoryNewForm, ContribituonsNewForm
 
-class AnaSayfaView(generic.TemplateView):
-    template_name = "ozgur_modul/anasayfa.html"
-
-class SSSView(generic.TemplateView):
-    template_name = "ozgur_modul/sss.html"
-
-class StoryListView(generic.ListView):
-    template_name = "ozgur_modul/hikayeler.html"
-    model = Storys  # object_list nesnesini gönderir
-#    def get_queryset(self):
-#        return Contributions.objects.all()
-
-class StoryView(generic.DetailView):
-    template_name = "ozgur_modul/hikaye.html"
-    model = Storys  # object nesnesini gönderir
-    pageCounter = Storys.objects.all()[0] 
-    pageCounter.show_count += 1 
-    pageCounter.save()    
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+# Create your views here.
 
 
+def story_list(request):
+    storys = Storys.objects.all()
+    return render(request, 'ozgur_modul/story_list.html', {'storys': storys})
 
-class ContributionCreateView(generic.CreateView):
-    form_class = ContribituonsNewForm
-    template_name = "ozgur_modul/contcreate.html"
-    success_url = "."
 
-    def hikaye_bilgilerini_getir(self):
-        """URL'den gelen ID (pk) bilgine bakarak Story nesnesini çeker"""
-        query = Storys.objects.filter(id=self.kwargs["pk"])
-        if query.exists():
-            return query.get()
+def story_create(request):
+    if request.method == 'POST':
+        form = StoryNewForm(request.POST)
+    else:
+        form = StoryNewForm()
+    return save_story_form(request, form, 'ozgur_modul/includes/partial_story_create.html')
+
+
+def save_story_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            storys = Storys.objects.all()
+            data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
+                'storys': storys
+            })
         else:
-            raise  Http404("Contributions not found")
-
-    def get_form_kwargs(self):
-        """Formun POST edilmesi sonrasında kaydederken gerekli olan story_id bağlaması burada yapılır"""
-        kwargs = super().get_form_kwargs()
-        if self.request.method in ["POST", "PUT"]:
-            post_data = kwargs["data"].copy()
-            post_data["story"] = self.hikaye_bilgilerini_getir().id
-            kwargs["data"] = post_data
-        return kwargs
-
-    def get_context_data(self, **kwargs): # Template e giden tüm dictionary burada tutulur
-        """Formu veritabanına kaydetme aşamasında bize "URL'den gelen ID (pk) bilgisi gerekiyor."""
-        context = super().get_context_data(**kwargs)
-        context["object"] = self.hikaye_bilgilerini_getir()
-        return context
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 
 
-
-class NewStoryView(generic.CreateView):
-    form_class = StoryNewForm
-    template_name = "ozgur_modul/create_story.html"
-
-    def get_success_url(self):
-        return  reverse("contribution_create", kwargs={"pk":self.object.id})
+def story_update(request, pk):
+    pass
 
 
+def story_delete(request, pk):
+    pass
 
+
+def story_like(request, pk):
+    pass
+
+
+def story_view(request, pk):
+    data = dict()
+    story = get_object_or_404(Storys, id=pk)
+    context = {'story_contributions': story.contributions_set.all(), 'story':story}
+    data['html_form'] = render_to_string('ozgur_modul/includes/partial_story_cont_view.html',context, request=request )
+    return JsonResponse(data)
+
+
+def cont_create(request, pk):
+    if request.method == 'POST':
+        form = ContribituonsNewForm(request.POST)
+    else:
+        form = ContribituonsNewForm()
+    return save_cont_form(request, form, 'ozgur_modul/includes/partial_cont_create.html')
+
+
+def save_cont_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            conts = Contributions.objects.all()
+            data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
+                'conts': conts
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)

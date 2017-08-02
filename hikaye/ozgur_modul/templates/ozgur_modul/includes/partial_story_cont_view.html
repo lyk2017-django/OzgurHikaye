@@ -1,0 +1,14 @@
+<div style="margin: 20px;">
+  <h1>{{ story.story_title }}</h1>
+{% for contribution in story_contributions %}
+<p>{{ contribution.contribution_text }}</p>
+{% empty %}
+<p class="text-center bg-warning">İçeri yok</p>
+{% endfor %}
+
+<button type="button" class="btn btn-primary js-new-cont" data-url="{% url 'new_cont_create' pk=story.id %}">
+<span class="glyphicon glyphicon-plus"></span>
+Katkıda Bulun
+</button>
+
+</div>

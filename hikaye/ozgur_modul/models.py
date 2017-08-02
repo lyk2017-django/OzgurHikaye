@@ -12,6 +12,7 @@ class Storys(models.Model):
     bad_count   = models.PositiveSmallIntegerField(default=0)
     contribution_count = models.PositiveSmallIntegerField(default=0)
 
+
     def __str__(self):
         return "#{id}-{text} ".format(id=self.id, text=self.story_title)
 
@@ -33,4 +34,3 @@ class Contributions(models.Model):
     class Meta:
         verbose_name="Katkı"
         verbose_name_plural = "Katkılar"
-
