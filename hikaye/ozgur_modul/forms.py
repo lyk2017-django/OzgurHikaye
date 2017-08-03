@@ -25,7 +25,8 @@ class ContribituonsNewForm(forms.ModelForm):
             "story": HiddenInput()
         }
         labels = {
-            "contribution_text": "" # Ekranda bu sahanın etiketi görünmesin...
+            "story" : "",
+            "contribution_text" : "Hikayeye Katkıda Bulunun" # Ekranda bu sahanın etiketi görünmesin...
         }
 
 

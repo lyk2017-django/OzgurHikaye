@@ -64,17 +64,7 @@ $(function () {
 
   $("#storys-table").on("click", ".js-view-story", loadForm);
 
-  $("#model-book").on("click", ".js-new-cont", loadForm);
-
-  // Update book
-  $("#book-table").on("click", ".js-update-book", loadForm);
-  $("#modal-book").on("submit", ".js-book-update-form", saveForm);
-
-  // Delete book
-  $("#book-table").on("click", ".js-delete-book", loadForm);
-  $("#modal-book").on("submit", ".js-book-delete-form", saveForm);
-
-  // Like Add
-  $("#book-table").on("click", ".js-like-book", likeForm);
+  $("#storys-table").on("click", ".js-new-cont", loadForm);
+  $("#modal-book").on("submit", ".js-cont-create-form", saveForm);
 
 });

@@ -7,8 +7,11 @@ from django.template.loader import render_to_string
 # Create your views here.
 
 
-def story_list(request):
-    storys = Storys.objects.all()
+def story_list(request,sirala="0"):
+    if sirala=="0":
+        storys = Storys.objects.all()
+    elif sirala=="1":
+        storys = Storys.objects.order_by("story_title")
     return render(request, 'ozgur_modul/story_list.html', {'storys': storys})
 
 
@@ -62,12 +65,14 @@ def cont_create(request, pk):
         form = ContribituonsNewForm(request.POST)
     else:
         form = ContribituonsNewForm()
-    return save_cont_form(request, form, 'ozgur_modul/includes/partial_cont_create.html')
+    return save_cont_form(request, form, 'ozgur_modul/includes/partial_cont_create.html', pk)
 
 
-def save_cont_form(request, form, template_name):
+def save_cont_form(request, form, template_name, pk):
     data = dict()
+    story = get_object_or_404(Storys, id=pk)
     if request.method == 'POST':
+        form.fields["story"] = story
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
@@ -77,6 +82,6 @@ def save_cont_form(request, form, template_name):
             })
         else:
             data['form_is_valid'] = False
-    context = {'form': form}
+    context = {'form': form,'story_contributions': story.contributions_set.all(), 'story':story}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)

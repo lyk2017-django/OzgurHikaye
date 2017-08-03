@@ -1,26 +1,16 @@
 {% for story in storys %}
   <tr>
-    <td><span data-url="{% url 'story_view' pk=story.id %}" href="{% url 'story_view' pk=story.id %}" class="js-view-story">{{ story.story_title }}</span></td>
+    <td><span data-url="{% url 'story_view' pk=story.id %}" href="{% url 'story_view' pk=story.id %}" class="js-sort-title">{{ story.story_title }}</span></td>
     <td>{{ story.create_time }}</td>
     <td>{{ story.show_count }}</td>
     <td>{{ story.good_count }}</td>
     <td>{{ story.bad_count }}</td>
     <td>{{ story.contribution_count }}</td>
-    <td style="width: 150px">
+    <td style="width: 50px">
       <button type="button"
-              class="btn btn-warning btn-sm js-update-book"
-              data-url="{% url 'story_update' story.id %}">
+              class="btn btn-warning btn-sm js-new-cont"
+              data-url="{% url 'new_cont_create' pk=story.id %}">
         <span class="glyphicon glyphicon-pencil"></span>
-      </button>
-      <button type="button"
-              class="btn btn-danger btn-sm js-delete-book"
-              data-url="{% url 'story_delete' story.id %}">
-        <span class="glyphicon glyphicon-trash"></span>
-      </button>
-      <button type="button"
-              class="btn btn-info btn-sm js-like-book"
-              data-url="{% url 'story_like' story.id %}">
-        <span class="glyphicon glyphicon-thumbs-up"></span>
       </button>
     </td>
   </tr>
