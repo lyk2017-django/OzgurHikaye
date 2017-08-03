@@ -12,15 +12,18 @@
 			<button class="btn btn-default btn-info" data-dismiss="modal">Kapat</button>	  
 	  </div>
 
-	  <div class="col-md-10 text-right">
+	  <div class="col-md-10 text-right" id="LikeDislikeBtn">
 
-			<button type="button" class="btn btn-primary btn-xl">
-			  <span class="glyphicon glyphicon-thumbs-up"></span>
-			</button>
+	      <button type="button" class="btn btn-primary btn-xl js-btn-like" 
+	                data-url="{% url 'story_update_like' pk=story.id %}">
+	        <span class="glyphicon glyphicon-thumbs-up"></span>
+	      </button>
 
-			<button type="button" class="btn btn-danger btn-xl">
-			  <span class="glyphicon glyphicon-thumbs-down"></span>
-			</button>
+	      <button type="button" class="btn btn-danger btn-xl js-btn-dislike" 
+	                data-url="{% url 'story_update_dislike' pk=story.id %}">
+	        <span class="glyphicon glyphicon-thumbs-down"></span>
+	      </button>
+
 	   </div>
 	</div>
 

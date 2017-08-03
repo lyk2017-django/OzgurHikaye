@@ -29,4 +29,7 @@ urlpatterns = [
     url(r'^story/sort/(?P<sirala>\w+)/$', views.story_list, name='sort_list'),
     url(r'^story/(?P<pk>\d+)/view/$', views.story_view, name='story_view'),
     url(r'^story/(?P<pk>\d+)/contcreate/$', views.cont_create, name='new_cont_create'),
+
+    url(r'^story/(?P<pk>\d+)/like/$', views.like_update, name='story_update_like'),
+    url(r'^story/(?P<pk>\d+)/dislike/$', views.dislike_update, name='story_update_dislike'),
 ]

@@ -14,13 +14,13 @@ def story_list(request,sirala=""):
     elif sirala=="title":
         storys = Storys.objects.order_by("story_title")
     elif sirala=="date":
-        storys = Storys.objects.order_by("create_time")
+        storys = Storys.objects.order_by("-create_time")
     elif sirala=="view":
-        storys = Storys.objects.order_by("show_count")
+        storys = Storys.objects.order_by("-show_count")
     elif sirala=="like":
-        storys = Storys.objects.order_by("good_count")
+        storys = Storys.objects.order_by("-good_count")
     elif sirala=="dislike":
-        storys = Storys.objects.order_by("bad_count")
+        storys = Storys.objects.order_by("-bad_count")
     elif sirala=="cont":
         storys = Storys.objects.order_by("contribution_count")
     return render(request, 'ozgur_modul/story_list.html', {'storys': storys})
@@ -73,6 +73,32 @@ def story_view(request, pk):
     context = {'story_contributions': story.contributions_set.all(), 'story':story}
     data['html_form'] = render_to_string('ozgur_modul/includes/partial_story_cont_view.html',context, request=request )
 
+
+    storys = Storys.objects.all()
+    data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
+        'storys': storys
+    })
+
+    return JsonResponse(data)
+
+
+
+def like_update(request, pk):
+    data = dict()
+    Storys.objects.filter(id=pk).update(good_count=F('good_count') + 1)
+
+    storys = Storys.objects.all()
+    data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
+        'storys': storys
+    })
+
+    return JsonResponse(data)
+
+
+
+def dislike_update(request, pk):
+    data = dict()
+    Storys.objects.filter(id=pk).update(bad_count=F('bad_count') + 1)
 
     storys = Storys.objects.all()
     data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {

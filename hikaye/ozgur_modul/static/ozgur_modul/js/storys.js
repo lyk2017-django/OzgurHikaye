@@ -2,6 +2,21 @@ $(function () {
 
   /* Functions */
 
+  var likeDislikeUpdate = function () {
+    $(".js-btn-like, .js-btn-dislike").hide("slow")
+    $("#LikeDislikeBtn").html("Teşekkürler...")
+    var btn = $(this);
+    $.ajax({
+      url: btn.attr("data-url"),
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        // Hikaye listesini refrest et
+        if(data.html_story_list != "") $("#storys-table tbody").html(data.html_story_list);
+      }
+    });
+  };
+
   var loadForm = function () {
     var btn = $(this);
     $.ajax({
@@ -21,6 +36,7 @@ $(function () {
       }
     });
   };
+
 
   var saveForm = function () {
     var form = $(this);
@@ -70,6 +86,9 @@ $(function () {
 
   $("#storys-table").on("click", ".js-new-cont", loadForm);
   $("#modal-book").on("submit", ".js-cont-create-form", saveForm);
+  
+  $("#modal-book").on("click", ".js-btn-like", likeDislikeUpdate);
+  $("#modal-book").on("click", ".js-btn-dislike", likeDislikeUpdate);
 
 
 });
