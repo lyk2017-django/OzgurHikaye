@@ -1,7 +1,7 @@
 <div style="margin: 20px;">
   <h1>{{ story.story_title }}</h1>
 	{% for contribution in story_contributions %}
-		<p>{{ contribution.contribution_text }}</p>
+		<p>{{ contribution.contribution_text|linebreaks }}</p>
 	{% empty %}
 		<p class="text-center bg-warning">İçeri yok</p>
 	{% endfor %}
