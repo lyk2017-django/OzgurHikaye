@@ -5,6 +5,7 @@ from ozgur_modul.forms import StoryNewForm, ContribituonsNewForm
 
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -23,7 +24,9 @@ def story_list(request,sirala=""):
         storys = Storys.objects.order_by("-bad_count")
     elif sirala=="cont":
         storys = Storys.objects.order_by("contribution_count")
-    return render(request, 'ozgur_modul/story_list.html', {'storys': storys})
+    pageinator = Paginator(storys,5)
+    data=pageinator.page(1)
+    return render(request, 'ozgur_modul/story_list.html', {'storys': data})
 
 
 def story_create(request):

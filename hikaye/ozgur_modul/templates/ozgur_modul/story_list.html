@@ -12,17 +12,28 @@
 
 
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-4">
       <button type="button" class="btn btn-primary js-create-story" data-url="{% url 'story_create' %}">
         <span class="glyphicon glyphicon-plus"></span>
         Yeni Hikaye
       </button>
     </div>
 
-    <div class="col-md-10 text-right">
-      <input type="text" name="ara" id="ara" value="" placeholder="Arama yap...">
-      <button type="button" class="btn btn-danger btnAramaYap" data-url="{% url 'arama_yap' ara='search' %}">Ara</button>
 
+    <div class="col-md-8 text-right">
+    <div class="form-group">
+        <div class="input-group">
+        <input type="text" class="form-control" name="ara" id="ara" value="" placeholder="Arama yap...">
+        <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-search"></span></span>
+    </div>
+    </div>
+
+
+
+
+<!--
+      <button type="button" class="btn btn-danger btnAramaYap" data-url="{% url 'arama_yap' ara='search' %}">Ara</button>
+-->
     </div>
   </div>
 
