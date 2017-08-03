@@ -138,3 +138,13 @@ def save_cont_form(request, form, template_name, pk):
     return JsonResponse(data)
 
 
+def arama_sonuc(request, ara):
+    data = dict()
+    storys = Storys.objects.filter(story_title__contains=ara)
+
+    data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
+        'storys': storys
+    })
+
+    return JsonResponse(data)
+

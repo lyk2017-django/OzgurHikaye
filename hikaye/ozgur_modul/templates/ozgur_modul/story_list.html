@@ -9,12 +9,23 @@
 {% block content %}
   <h1 class="page-header">Hikayeler</h1>
 
-  <p>
-    <button type="button" class="btn btn-primary js-create-story" data-url="{% url 'story_create' %}">
-      <span class="glyphicon glyphicon-plus"></span>
-      Yeni Hikaye
-    </button>
-  </p>
+
+
+  <div class="row">
+    <div class="col-md-2">
+      <button type="button" class="btn btn-primary js-create-story" data-url="{% url 'story_create' %}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Yeni Hikaye
+      </button>
+    </div>
+
+    <div class="col-md-10 text-right">
+      <input type="text" name="ara" id="ara" value="" placeholder="Arama yap...">
+      <button type="button" class="btn btn-danger btnAramaYap" data-url="{% url 'arama_yap' ara='search' %}">Ara</button>
+
+    </div>
+  </div>
+
 
 
 

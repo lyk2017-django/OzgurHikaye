@@ -32,4 +32,6 @@ urlpatterns = [
 
     url(r'^story/(?P<pk>\d+)/like/$', views.like_update, name='story_update_like'),
     url(r'^story/(?P<pk>\d+)/dislike/$', views.dislike_update, name='story_update_dislike'),
+    
+    url(r'^story/search/(?P<ara>\w+)/$', views.arama_sonuc, name='arama_yap'),
 ]

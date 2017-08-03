@@ -2,6 +2,22 @@ $(function () {
 
   /* Functions */
 
+
+  var AramaYap = function () {
+    var btn = $(this);
+    $.ajax({
+//      url: btn.attr("data-url") + $("#ara").val(),
+      url: "/story/search/" + $("#ara").val(),
+      type: 'get',
+      dataType: 'json',
+      success: function (data) {
+        if(data.html_story_list != "") $("#storys-table tbody").html(data.html_story_list);
+      }
+    });
+  }
+
+
+
   var likeDislikeUpdate = function () {
     $(".js-btn-like, .js-btn-dislike").hide("slow")
     $("#LikeDislikeBtn").html("Teşekkürler...")
@@ -96,6 +112,10 @@ $(function () {
   // Beğendim ve Beğenmedim düğmeleri
   $("#modal-book").on("click", ".js-btn-like", likeDislikeUpdate);
   $("#modal-book").on("click", ".js-btn-dislike", likeDislikeUpdate);
+
+  // Arama Yapalım
+  $(".btnAramaYap").click(AramaYap);
+  $("#ara").on("keyup", AramaYap);
   
 
 
