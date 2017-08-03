@@ -1,7 +1,7 @@
 {% for story in storys %}
   <tr>
     <td><span data-url="{% url 'story_view' pk=story.id %}" href="{% url 'story_view' pk=story.id %}" class="js-sort-title">{{ story.story_title }}</span></td>
-    <td>{{ story.create_time }}</td>
+    <td>{{ story.create_time|date:"d.m.Y" }}</td>
     <td>{{ story.show_count }}</td>
     <td>{{ story.good_count }}</td>
     <td>{{ story.bad_count }}</td>

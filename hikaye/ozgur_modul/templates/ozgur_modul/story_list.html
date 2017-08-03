@@ -19,12 +19,12 @@
   <table class="table" id="storys-table">
     <thead>
       <tr>
-        <th><a href="{% url 'sort_list' sirala=1 %}">Başlık</a></th>
-        <th>Zaman</th>
-        <th>Görüntülenme</th>
-        <th>Beğenilme</th>
-        <th>Beğenilmeme</th>
-        <th>Katkı</th>
+        <th><a href="{% url 'sort_list' sirala='title' %}">Başlık</a></th>
+        <th><a href="{% url 'sort_list' sirala='date' %}">Zaman</a></th>
+        <th><a href="{% url 'sort_list' sirala='view' %}">Görüntülenme</a></th>
+        <th><a href="{% url 'sort_list' sirala='like' %}">Beğenilme</a></th>
+        <th><a href="{% url 'sort_list' sirala='dislike' %}">Beğenilmeme</a></th>
+        <th><a href="{% url 'sort_list' sirala='cont' %}">Katkı</a></th>
         <th></th>
       </tr>
     </thead>

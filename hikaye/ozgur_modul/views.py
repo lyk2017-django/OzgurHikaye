@@ -7,11 +7,21 @@ from django.template.loader import render_to_string
 # Create your views here.
 
 
-def story_list(request,sirala="0"):
-    if sirala=="0":
+def story_list(request,sirala=""):
+    if sirala=="":
         storys = Storys.objects.all()
-    elif sirala=="1":
+    elif sirala=="title":
         storys = Storys.objects.order_by("story_title")
+    elif sirala=="date":
+        storys = Storys.objects.order_by("create_time")
+    elif sirala=="view":
+        storys = Storys.objects.order_by("show_count")
+    elif sirala=="like":
+        storys = Storys.objects.order_by("good_count")
+    elif sirala=="dislike":
+        storys = Storys.objects.order_by("bad_count")
+    elif sirala=="cont":
+        storys = Storys.objects.order_by("contribution_count")
     return render(request, 'ozgur_modul/story_list.html', {'storys': storys})
 
 
