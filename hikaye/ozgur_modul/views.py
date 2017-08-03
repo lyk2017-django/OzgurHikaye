@@ -110,7 +110,9 @@ def dislike_update(request, pk):
 
 def cont_create(request, pk):
     if request.method == 'POST':
-        form = ContribituonsNewForm(request.POST)
+        yeni_post = request.POST.copy()
+        yeni_post["story"] = pk
+        form = ContribituonsNewForm(yeni_post)
     else:
         form = ContribituonsNewForm()
     return save_cont_form(request, form, 'ozgur_modul/includes/partial_cont_create.html', pk)
@@ -120,13 +122,14 @@ def save_cont_form(request, form, template_name, pk):
     data = dict()
     story = get_object_or_404(Storys, id=pk)
     if request.method == 'POST':
-        form.fields["story"] = story
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            conts = Contributions.objects.all()
+            Storys.objects.filter(id=pk).update(contribution_count=F('contribution_count') + 1)
+
+            storys = Storys.objects.all()
             data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-                'conts': conts
+                'storys': storys
             })
         else:
             data['form_is_valid'] = False

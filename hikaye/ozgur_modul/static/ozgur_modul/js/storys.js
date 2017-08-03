@@ -78,17 +78,25 @@ $(function () {
 
   /* Binding */
 
-  // Create book
+  // Yeni Hikaye Başlatma Ekranını aç
   $(".js-create-story").click(loadForm);
+
+  // Yeni Hikayeyi Kaydet
   $("#modal-book").on("submit", ".js-story-create-form", saveForm);
 
+  // Hikayeye yapılan katkıları listele
   $("#storys-table").on("click", ".js-view-story", loadForm);
 
+  // Hikayeye katkıda bulun ekranını aç
   $("#storys-table").on("click", ".js-new-cont", loadForm);
+  
+  // Hikayeye yapılan katkıyı kaydet
   $("#modal-book").on("submit", ".js-cont-create-form", saveForm);
   
+  // Beğendim ve Beğenmedim düğmeleri
   $("#modal-book").on("click", ".js-btn-like", likeDislikeUpdate);
   $("#modal-book").on("click", ".js-btn-dislike", likeDislikeUpdate);
+  
 
 
 });

@@ -21,9 +21,7 @@ class ContribituonsNewForm(forms.ModelForm):
     class Meta:
         model = Contributions
         exclude = ["id"]
-        widgets = {
-            "story": HiddenInput()
-        }
+        widgets = { "story" : HiddenInput() }
         labels = {
             "story" : "",
             "contribution_text" : "Hikayeye Katkıda Bulunun" # Ekranda bu sahanın etiketi görünmesin...

@@ -14,6 +14,7 @@
 
 	  <div class="col-md-10 text-right" id="LikeDislikeBtn">
 
+		{% if story_contributions %}
 	      <button type="button" class="btn btn-primary btn-xl js-btn-like" 
 	                data-url="{% url 'story_update_like' pk=story.id %}">
 	        <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -23,7 +24,7 @@
 	                data-url="{% url 'story_update_dislike' pk=story.id %}">
 	        <span class="glyphicon glyphicon-thumbs-down"></span>
 	      </button>
-
+		{% endif %}
 	   </div>
 	</div>
 
