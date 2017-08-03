@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='anasayfa.html'), name='anasayfa'),
     url(r'^storys/$', views.story_list, name='story_list'),
+    url(r'^storys/about$', TemplateView.as_view(template_name='hakkimizda.html'), name='about'),
     url(r'^story/create/$', views.story_create, name='story_create'),
     url(r'^story/(?P<pk>\d+)/update/$', views.story_update, name='story_update'),
     url(r'^story/(?P<pk>\d+)/delete/$', views.story_delete, name='story_delete'),

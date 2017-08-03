@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import F
 from ozgur_modul.models import Storys, Contributions
 from ozgur_modul.forms import StoryNewForm, ContribituonsNewForm
 
@@ -65,8 +66,19 @@ def story_like(request, pk):
 def story_view(request, pk):
     data = dict()
     story = get_object_or_404(Storys, id=pk)
+
+    Storys.objects.filter(id=pk).update(show_count=F('show_count') + 1)
+
+    story.refresh_from_db()
     context = {'story_contributions': story.contributions_set.all(), 'story':story}
     data['html_form'] = render_to_string('ozgur_modul/includes/partial_story_cont_view.html',context, request=request )
+
+
+    storys = Storys.objects.all()
+    data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
+        'storys': storys
+    })
+
     return JsonResponse(data)
 
 
@@ -95,3 +107,5 @@ def save_cont_form(request, form, template_name, pk):
     context = {'form': form,'story_contributions': story.contributions_set.all(), 'story':story}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+

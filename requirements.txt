@@ -1,1 +1,2 @@
-django
+django==1.10.*
+django-widget-tweaks==1.4.*
