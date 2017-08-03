@@ -8,8 +8,15 @@ from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
-def paginatorReturner(storys,request):
+def paginatorReturner(request, ara=""):
     page = request.session["page"]
+    siralama = request.session["siralamasi"]
+
+    if ara != "":
+        storys = Storys.objects.filter(story_title__contains=ara)
+    else: 
+        storys = Storys.objects.order_by( siralama )
+
     paginator = Paginator(storys, settings.SAYFADAKI_KAYIT_ADEDI)
     try:
         data = paginator.page(page)
@@ -22,22 +29,26 @@ def paginatorReturner(storys,request):
 
 def story_list(request,sirala=""):
     if sirala=="":
-        storys = Storys.objects.all()
+        sirasi = "id" 
     elif sirala=="title":
-        storys = Storys.objects.order_by("story_title")
+        sirasi = "story_title" 
     elif sirala=="date":
-        storys = Storys.objects.order_by("-create_time")
+        sirasi = "-create_time" 
     elif sirala=="view":
-        storys = Storys.objects.order_by("-show_count")
+        sirasi = "-show_count" 
     elif sirala=="like":
-        storys = Storys.objects.order_by("-good_count")
+        sirasi = "-good_count" 
     elif sirala=="dislike":
-        storys = Storys.objects.order_by("-bad_count")
+        sirasi = "-bad_count"
     elif sirala=="cont":
-        storys = Storys.objects.order_by("-contribution_count")
+        sirasi = "-contribution_count"
+
     page = request.GET.get('page', 1)
+
     request.session["page"]=page
-    return render(request, 'ozgur_modul/story_list.html', {'storys': paginatorReturner(storys,request)})
+    request.session["siralamasi"]=sirasi
+
+    return render(request, 'ozgur_modul/story_list.html', {'storys': paginatorReturner(request)})
 
 
 def story_create(request):
@@ -54,9 +65,8 @@ def save_story_form(request, form, template_name):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            storys = Storys.objects.all()
             data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-                'storys': paginatorReturner(storys,request)
+                'storys': paginatorReturner(request)
             })
         else:
             data['form_is_valid'] = False
@@ -87,10 +97,8 @@ def story_view(request, pk):
     context = {'story_contributions': story.contributions_set.all(), 'story':story}
     data['html_form'] = render_to_string('ozgur_modul/includes/partial_story_cont_view.html',context, request=request )
 
-
-    storys = Storys.objects.all()
     data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-        'storys': paginatorReturner(storys,request)
+        'storys': paginatorReturner(request)
     })
 
     return JsonResponse(data)
@@ -101,9 +109,8 @@ def like_update(request, pk):
     data = dict()
     Storys.objects.filter(id=pk).update(good_count=F('good_count') + 1)
 
-    storys = Storys.objects.all()
     data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-        'storys': paginatorReturner(storys,request)
+        'storys': paginatorReturner(request)
     })
 
     return JsonResponse(data)
@@ -114,9 +121,8 @@ def dislike_update(request, pk):
     data = dict()
     Storys.objects.filter(id=pk).update(bad_count=F('bad_count') + 1)
 
-    storys = Storys.objects.all()
     data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-        'storys': paginatorReturner(storys,request)
+        'storys': paginatorReturner(request)
     })
 
     return JsonResponse(data)
@@ -141,9 +147,8 @@ def save_cont_form(request, form, template_name, pk):
             data['form_is_valid'] = True
             Storys.objects.filter(id=pk).update(contribution_count=F('contribution_count') + 1)
 
-            storys = Storys.objects.all()
             data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-                'storys': paginatorReturner(storys,request)
+                'storys': paginatorReturner(request)
             })
         else:
             data['form_is_valid'] = False
@@ -154,11 +159,10 @@ def save_cont_form(request, form, template_name, pk):
 
 def arama_sonuc(request):
     data = dict()
-    ara = request.GET.get("aranan_metin", "")
-    storys = Storys.objects.filter(story_title__contains=ara)
+    ara  = request.GET.get("aranan_metin", "")
 
     data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {
-        'storys': paginatorReturner(storys,request)
+        'storys': paginatorReturner(request, ara)
     })
 
     return JsonResponse(data)
