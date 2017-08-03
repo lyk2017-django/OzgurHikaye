@@ -23,17 +23,12 @@
     <div class="col-md-8 text-right">
     <div class="form-group">
         <div class="input-group">
-        <input type="text" class="form-control" name="ara" id="ara" value="" placeholder="Arama yap...">
+        <input type="text" class="form-control" data-url="{% url 'arama_yap' %}" name="ara" id="ara" value="" placeholder="Arama yap...">
         <span class="input-group-addon" id="start-date"><span class="glyphicon glyphicon-search"></span></span>
     </div>
     </div>
 
 
-
-
-<!--
-      <button type="button" class="btn btn-danger btnAramaYap" data-url="{% url 'arama_yap' ara='search' %}">Ara</button>
--->
     </div>
   </div>
 
@@ -65,3 +60,4 @@
     </div>
   </div>
 {% endblock %}
+

@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import F
 from ozgur_modul.models import Storys, Contributions
 from ozgur_modul.forms import StoryNewForm, ContribituonsNewForm
-
+from django.conf import settings
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 
@@ -24,8 +24,16 @@ def story_list(request,sirala=""):
         storys = Storys.objects.order_by("-bad_count")
     elif sirala=="cont":
         storys = Storys.objects.order_by("contribution_count")
-    pageinator = Paginator(storys,5)
-    data=pageinator.page(1)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(storys, settings.SAYFADAKI_KAYIT_ADEDI)
+    try:
+        data = paginator.page(page)
+    except PageNotAnInteger:
+        data = paginator.page(1)
+    except EmptyPage:
+        data = paginator.page(paginator.num_pages)
+
     return render(request, 'ozgur_modul/story_list.html', {'storys': data})
 
 
@@ -141,8 +149,9 @@ def save_cont_form(request, form, template_name, pk):
     return JsonResponse(data)
 
 
-def arama_sonuc(request, ara):
+def arama_sonuc(request):
     data = dict()
+    ara = request.GET.get("aranan_metin", "")
     storys = Storys.objects.filter(story_title__contains=ara)
 
     data['html_story_list'] = render_to_string('ozgur_modul/includes/partial_story_list.html', {

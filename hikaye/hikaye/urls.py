@@ -13,25 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 from ozgur_modul import views
+from ozgur_modul.urls import urlpatterns as ozgur_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='anasayfa.html'), name='anasayfa'),
-    url(r'^storys/$', views.story_list, name='story_list'),
-    url(r'^storys/about$', TemplateView.as_view(template_name='hakkimizda.html'), name='about'),
-    url(r'^story/create/$', views.story_create, name='story_create'),
-    url(r'^story/(?P<pk>\d+)/update/$', views.story_update, name='story_update'),
-    url(r'^story/(?P<pk>\d+)/delete/$', views.story_delete, name='story_delete'),
-    url(r'^story/sort/(?P<sirala>\w+)/$', views.story_list, name='sort_list'),
-    url(r'^story/(?P<pk>\d+)/view/$', views.story_view, name='story_view'),
-    url(r'^story/(?P<pk>\d+)/contcreate/$', views.cont_create, name='new_cont_create'),
+    url(r'^story/', include(ozgur_urls)),
 
-    url(r'^story/(?P<pk>\d+)/like/$', views.like_update, name='story_update_like'),
-    url(r'^story/(?P<pk>\d+)/dislike/$', views.dislike_update, name='story_update_dislike'),
-    
-    url(r'^story/search/(?P<ara>\w+)/$', views.arama_sonuc, name='arama_yap'),
+    url(r'^$', TemplateView.as_view(template_name='anasayfa.html'), name='anasayfa'),
+
 ]

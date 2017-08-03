@@ -4,10 +4,10 @@ $(function () {
 
 
   var AramaYap = function () {
-    var btn = $(this);
+    var AramaSahasi = $("#ara");
     $.ajax({
-//      url: btn.attr("data-url") + $("#ara").val(),
-      url: "/story/search/" + $("#ara").val(),
+      url: AramaSahasi.attr("data-url"),
+      data: { "aranan_metin": $("#ara").val() },
       type: 'get',
       dataType: 'json',
       success: function (data) {

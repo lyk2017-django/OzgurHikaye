@@ -21,3 +21,30 @@
     <td colspan="7" class="text-center bg-warning">Hikaye bulunamadı...</td>
   </tr>
 {% endfor %}
+
+
+{% if storys.has_other_pages %}
+<tr>
+<td colspan="7" class="text-center">
+  <ul class="pagination">
+    {% if storys.has_previous %}
+      <li><a href="?page={{ storys.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in storys.paginator.page_range %}
+      {% if storys.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if storys.has_next %}
+      <li><a href="?page={{ storys.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+  </td>
+</tr>
+{% endif %}
