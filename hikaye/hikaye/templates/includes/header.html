@@ -7,14 +7,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'anasayfa' %}">Ana Sayfa</a>
+      <a class="navbar-brand" href="{% url 'anasayfa' %}">Özgür Hikaye</a>
     </div>
     <div class="collapse navbar-collapse" id="main-menu">
       <ul class="nav navbar-nav">
         <li{% if request.path == '/ozgur_modul/' %} class="active"{% endif %}>
           <a href="{% url 'story_list' %}">Hikayeler</a>
         </li>
-        <li><a href="{% url 'about' %}">Hakkında...</a></li>
+        <li><a href="{% url 'about' %}">Hakkımızda</a></li>
       </ul>
     </div>
   </div>
