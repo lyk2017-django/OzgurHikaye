@@ -33,19 +33,21 @@ def story_list(request,sirala=""):
     elif sirala=="title":
         sirasi = "story_title" 
     elif sirala=="date":
-        sirasi = "-create_time" 
+        sirasi = "create_time" 
     elif sirala=="view":
-        sirasi = "-show_count" 
+        sirasi = "show_count" 
     elif sirala=="like":
-        sirasi = "-good_count" 
+        sirasi = "good_count" 
     elif sirala=="dislike":
-        sirasi = "-bad_count"
+        sirasi = "bad_count"
     elif sirala=="cont":
-        sirasi = "-contribution_count"
+        sirasi = "contribution_count"
 
     page = request.GET.get('page', 1)
 
     request.session["page"]=page
+    if sirasi == request.session["siralamasi"]:
+        sirasi = "-" + sirasi
     request.session["siralamasi"]=sirasi
 
     return render(request, 'ozgur_modul/story_list.html', {'storys': paginatorReturner(request)})
