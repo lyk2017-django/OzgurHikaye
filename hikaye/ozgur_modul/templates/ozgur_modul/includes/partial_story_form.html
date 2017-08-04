@@ -1,7 +1,7 @@
 {% load widget_tweaks %}
 
 {% for field in form %}
-  <div class="form-group{% if field.errors %} has-error{% endif %}">
+  <div class="form-group{% if field.errors %} has-error{% endif %}" id="div_{{field.name}}">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
     {% render_field field class="form-control" %}
     {% for error in field.errors %}
@@ -9,3 +9,11 @@
     {% endfor %}
   </div>
 {% endfor %}
+
+<style>
+#div_story {display:none;}
+
+#id_contribution_text {
+    height: 100px;
+}
+</style>

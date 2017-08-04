@@ -1,19 +1,32 @@
 {% load widget_tweaks %}
-<div style="margin: 20px;">
-  <h1>{{ story.story_title }}</h1>
-{% for contribution in story_contributions %}
-<p>{{ contribution.contribution_text }}</p>
-{% empty %}
-<p class="text-center bg-warning">İçeri yok</p>
-{% endfor %}
+
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">{{ story.story_title }}</h4>
+  </div>
+
+
 
 <form method="post" action="{% url 'new_cont_create' pk=story.id %}" class="js-cont-create-form">
   {% csrf_token %}
+
   <div class="modal-body">
+	{% for contribution in story_contributions %}
+	<p>{{ contribution.contribution_text }}</p>
+	{% empty %}
+	<p class="text-center bg-warning">İçerik yok</p>
+	{% endfor %}
+
     {% include 'ozgur_modul/includes/partial_story_form.html' %}
   </div>
+
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
     <button type="submit" class="btn btn-primary">Gönder</button>
   </div>
+
 </form>
+
+
