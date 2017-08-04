@@ -4,10 +4,10 @@
       <span data-url="{% url 'story_view' pk=story.id %}" 
             class="js-view-story">{{ story.story_title }}</span></u></td>
     <td>{{ story.create_time|date:"d.m.Y" }}</td>
-    <td>{{ story.show_count }}</td>
-    <td>{{ story.good_count }}</td>
-    <td>{{ story.bad_count }}</td>
-    <td>{{ story.contribution_count }}</td>
+    <td class="text-center">{{ story.show_count }}</td>
+    <td class="text-center">{{ story.good_count }}</td>
+    <td class="text-center">{{ story.bad_count }}</td>
+    <td class="text-center">{{ story.contribution_count }}</td>
     <td style="width: 50px">
       <button type="button"
               class="btn btn-warning btn-sm js-new-cont"
